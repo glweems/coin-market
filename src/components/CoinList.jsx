@@ -32,7 +32,7 @@ export class CoinList extends Component {
   }
 
   render() {
-    const headings = ["#", "Name", "Market Cap", "Price", "Change (24hr)"];
+    const headings = ["#", "Name", "Price", "Change (24hr)"];
     const TableRows = this.state.coins.map((coin, index) => (
       <CoinListItem key={coin.CoinInfo.Name} rank={index} coin={coin} />
     ));
@@ -40,7 +40,7 @@ export class CoinList extends Component {
     return (
       <div>
         {/* <p>{this.state.coins[0]}</p> */}
-        <table className="table">
+        <table className="table is-fullwidth">
           <TableHeader headers={headings} />
           <tbody>{TableRows}</tbody>
         </table>

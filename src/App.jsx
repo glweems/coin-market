@@ -12,7 +12,9 @@ class App extends Component {
             <h1 className="title">Coin Markets</h1>
           </div>
         </section>
-        <CoinList />
+        <section className="container">
+          <CoinList />
+        </section>
       </div>
     );
   }

@@ -6,7 +6,7 @@ export class CoinListItem extends Component {
       <tr>
         <td>{this.props.rank}</td>
         <td>{this.props.coin.CoinInfo.Name}</td>
-        <td>{this.props.coin.DISPLAY.USD.MKTCAP}</td>
+        {/* <td>{this.props.coin.DISPLAY.USD.MKTCAP}</td> */}
         <td>{this.props.coin.DISPLAY.USD.PRICE}</td>
         <td>{this.props.coin.DISPLAY.USD.CHANGE24HOUR}</td>
       </tr>
