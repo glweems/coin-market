@@ -40,7 +40,7 @@ export class CoinList extends Component {
     return (
       <div>
         {/* <p>{this.state.coins[0]}</p> */}
-        <table className="table">
+        <table className="table is-fullwidth">
           <TableHeader headers={headings} />
           <tbody>{TableRows}</tbody>
         </table>
