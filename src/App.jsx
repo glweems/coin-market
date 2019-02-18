@@ -7,6 +7,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <section className="hero is-link">
+          <div className="hero-body">
+            <h1 className="title">Coin Markets</h1>
+          </div>
+        </section>
         <CoinList />
       </div>
     );
