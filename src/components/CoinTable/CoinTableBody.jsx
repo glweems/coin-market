@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CoinTableRow from "./CoinTableRow";
 import axios from "axios";
-
+require("dotenv").config();
 export class CoinTableBody extends Component {
   state = {
     coins: []
@@ -21,8 +21,8 @@ export class CoinTableBody extends Component {
       });
   }
   render() {
-    const CoinTableRows = this.state.coins.map(coin => (
-      <CoinTableRow key={coin.symbol} coin={coin} />
+    const CoinTableRows = this.state.coins.map((coin, index) => (
+      <CoinTableRow key={coin.symbol} rank={index} coin={coin} />
     ));
 
     return <tbody>{CoinTableRows}</tbody>;

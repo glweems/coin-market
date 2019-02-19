@@ -23,7 +23,7 @@ export class CoinTableRow extends Component {
       <tr>
         <td>{coin.rank}</td>
         <td>
-          <Link to={`/coins/${coin.symbol}`}>
+          <Link to={{ pathname: `/coins/${coin.symbol}`, state: { coin } }}>
             <span>{coin.symbol}</span>
           </Link>
         </td>

@@ -1,11 +1,10 @@
-const API_KEY = "Apikey " + process.env.API_KEY;
+import axios from "axios";
 
-export const getCoins = URL => {
-  return {
-    method: "get",
-    url: `https://min-api.cryptocompare.com${URL}`,
-    headers: {
-      Authorization: API_KEY
-    }
-  };
-};
+axios
+  .get("https://api.coinmarketcap.com/v1/ticker/")
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
