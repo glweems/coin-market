@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CoinTableHeader from "./CoinTableHeader";
 import CoinTableBody from "./CoinTableBody";
+import "./CoinTable.scss"
 
 export class CoinTable extends Component {
   state = {
