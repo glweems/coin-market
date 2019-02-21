@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { CoinImg } from "../../Api";
 import axios from "axios";
 
 export class CoinTable extends Component {
@@ -80,7 +81,6 @@ const TableRow = props => {
   const { coin, rank } = props;
   // const { Name } = coin.CoinInfo;
   // const { MKTCAP, PRICE, CHANGEPCTDAY, IMAGEURL } = coin.DISPLAY.USD;
-  const CoinImg = URL => `https://cryptocompare.com/${URL}`;
 
   const NameRow = () => (
     <Link to={coin.Name}>
