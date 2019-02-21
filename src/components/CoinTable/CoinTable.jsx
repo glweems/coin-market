@@ -43,7 +43,7 @@ export class CoinTable extends Component {
       ));
 
     const table = () => (
-      <table className="table">
+      <table className="table is-fullwidth">
         {TableHeader()}
         <tbody>{TableRows()}</tbody>
       </table>
