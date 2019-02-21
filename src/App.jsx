@@ -3,9 +3,9 @@ import CoinTable from "./Components/CoinTable";
 class App extends Component {
   render() {
     return (
-      <section className="App container">
+      <div className="App container is-fluid">
         <CoinTable />
-      </section>
+      </div>
     );
   }
 }
