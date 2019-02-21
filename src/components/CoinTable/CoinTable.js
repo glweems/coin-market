@@ -13,19 +13,18 @@ export class CoinTable extends Component {
   }
 
   componentDidMount() {
-    let data = this.getCoins();
     if (!this.state.data) {
       (async () => {
         try {
           this.setState({
             coins: [
-              ...(await data).map(coin => {
+              ...(await this.getCoins()).map(coin => {
                 return {
-                  CoinInfo: { ...{ ...coin.CoinInfo }, ...coin.DISPLAY.USD }
+                  ...{ ...coin.CoinInfo },
+                  ...coin.DISPLAY.USD
                 };
               })
-            ],
-            data: await data
+            ]
           });
         } catch (error) {
           console.error(error);
@@ -35,8 +34,8 @@ export class CoinTable extends Component {
   }
   render() {
     const TableRows = () =>
-      this.state.data.map((row, index) => (
-        <TableRow key={row.CoinInfo.Name} coin={row} rank={index} />
+      this.state.coins.map((coin, index) => (
+        <TableRow key={coin.Name} coin={coin} rank={index} />
       ));
 
     const Table = () => (
@@ -46,7 +45,7 @@ export class CoinTable extends Component {
       </table>
     );
     return (
-      <section>{!this.state.data ? <em>Loading...</em> : Table()}</section>
+      <section>{!this.state.coins ? <em>Loading...</em> : Table()}</section>
     );
   }
 }
@@ -68,7 +67,7 @@ const TableHeader = headers => (
 const TableRow = props => {
   const changeStyle = () => {
     return {
-      color: props.coin.DISPLAY.USD.CHANGEPCTDAY >= 0 ? "green" : "red"
+      color: props.coin.CHANGEPCTDAY >= 0 ? "green" : "red"
     };
   };
 
@@ -79,14 +78,14 @@ const TableRow = props => {
   };
 
   const { coin, rank } = props;
-  const { Name } = coin.CoinInfo;
-  const { MKTCAP, PRICE, CHANGEPCTDAY, IMAGEURL } = coin.DISPLAY.USD;
+  // const { Name } = coin.CoinInfo;
+  // const { MKTCAP, PRICE, CHANGEPCTDAY, IMAGEURL } = coin.DISPLAY.USD;
   const CoinImg = URL => `https://cryptocompare.com/${URL}`;
 
   const NameRow = () => (
-    <Link to={Name}>
-      <img style={imgStyle} src={CoinImg(IMAGEURL)} alt={`${Name}`} />
-      {Name}
+    <Link to={coin.Name}>
+      <img style={imgStyle} src={CoinImg(coin.IMAGEURL)} alt={`${coin.Name}`} />
+      {coin.Name}
     </Link>
   );
 
@@ -94,9 +93,9 @@ const TableRow = props => {
     <tr>
       <td>{rank}</td>
       <td style={nameCell}>{NameRow()}</td>
-      <td>{MKTCAP}</td>
-      <td>{PRICE}</td>
-      <td style={changeStyle()}>{`${CHANGEPCTDAY}%`}</td>
+      <td>{coin.MKTCAP}</td>
+      <td>{coin.PRICE}</td>
+      <td style={changeStyle()}>{`${coin.CHANGEPCTDAY}%`}</td>
     </tr>
   );
 };

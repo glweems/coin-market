@@ -1,3 +1,3 @@
-import CoinTable from "./CoinTable.jsx";
+import CoinTable from "./CoinTable";
 
 export default CoinTable;
