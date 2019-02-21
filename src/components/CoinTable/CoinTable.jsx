@@ -43,17 +43,24 @@ export class CoinTable extends Component {
       ));
 
     const table = () => (
-      <table className="table is-fullwidth">
+      <table className="table is-fullwidth is-striped" style={tableStyle}>
         {TableHeader()}
         <tbody>{TableRows()}</tbody>
       </table>
     );
     return (
-      <React.Fragment>
-        {!this.state.data ? <em>Loading...</em> : table()}
-      </React.Fragment>
+      <section>
+        <div className="container is-fluid">
+          {!this.state.data ? <em>Loading...</em> : table()}
+        </div>
+      </section>
     );
   }
 }
+
+const tableStyle = {
+  maxWidth: "100%",
+  overflow: "scroll"
+};
 
 export default CoinTable;
