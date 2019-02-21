@@ -1,6 +1,6 @@
 import React from "react";
 
-function Hero(props) {
+export function Hero(props) {
   return (
     <section className="hero is-link">
       <div className="hero-body">
@@ -9,7 +9,5 @@ function Hero(props) {
     </section>
   );
 }
-
-// Hero.propTypes = {};
 
 export default Hero;

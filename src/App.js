@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import CoinTable from "./Components/CoinTable";
-import Hero from "./Components/Hero";
+import CoinTable from "./Components/CoinTable/CoinTable.js";
+import Hero from "./Components/Hero/Hero.js";
 import { CoinPage } from "./CoinPage";
 
 const HomePage = () => (

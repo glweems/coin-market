@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-
-import axios from "axios";
-import Hero from "./Components/Hero";
 import { CoinImg } from "./Api";
+import axios from "axios";
+
 export class CoinPage extends Component {
   state = null;
   COIN_ID = this.props.match.params.id;
