@@ -36,7 +36,7 @@ export class CoinTable extends Component {
   render() {
     const TableRows = () =>
       this.state.coins.map((coin, index) => (
-        <TableRow key={coin.Name} coin={coin} rank={index} />
+        <TableRow key={coin.Name} coin={coin} rank={index + 1} />
       ));
 
     const Table = () => (
@@ -54,15 +54,21 @@ export class CoinTable extends Component {
 const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 
 // * Table Header
-const TableHeader = headers => (
-  <thead>
-    <tr>
-      {headers.map(header => (
-        <th key={header}>{header}</th>
-      ))}
-    </tr>
-  </thead>
-);
+const TableHeader = headers => {
+  const marketCapStyle = header =>
+    header === "Market Cap" ? "marketcap-row" : "";
+  return (
+    <thead>
+      <tr>
+        {headers.map(header => (
+          <th className={marketCapStyle(header)} key={header}>
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+};
 
 // * Table Row
 const TableRow = props => {

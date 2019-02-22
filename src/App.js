@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CoinTable from "./Components/CoinTable/CoinTable.js";
-import Hero from "./Components/Hero/Hero.js";
+import Hero from "./Components/Hero/Hero";
 import { CoinPage } from "./CoinPage";
+import { Scroller } from "./Components";
+import "./App.scss";
 
 const HomePage = () => (
   <React.Fragment>
@@ -10,7 +12,9 @@ const HomePage = () => (
       <Hero title="Coin Markets" />
     </section>
     <section className="container">
-      <CoinTable />
+      <Scroller>
+        <CoinTable />
+      </Scroller>
     </section>
   </React.Fragment>
 );

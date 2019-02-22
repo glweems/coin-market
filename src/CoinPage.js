@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import { CoinImg } from "./Api";
 import axios from "axios";
+import styled from "styled-components";
+import { CoinImg } from "./Api";
+import { Hero } from "./Components";
+
+const CoinLogo = styled.img`
+  width: 100px;
+`;
 
 export class CoinPage extends Component {
   state = null;
@@ -46,12 +52,15 @@ export class CoinPage extends Component {
             <em>Loading..</em>
           ) : (
             <section className="container">
-              <CoinHero
+              <Hero
                 title={this.state.FullName}
                 subtitle={`Market Cap: ${this.state.usd.MKTCAP}`}
               />
-              <p>{this.COIN_ID}</p>
-              <img src={CoinImg(this.state.ImageUrl)} alt="" />
+              <CoinLogo
+                src={CoinImg(this.state.ImageUrl)}
+                alt={this.state.FullName}
+              />
+              <h1 className="title">{this.state.usd.PRICE}</h1>
             </section>
           )}
         </section>
@@ -59,18 +68,3 @@ export class CoinPage extends Component {
     );
   }
 }
-
-const CoinHero = props => {
-  let subtitle, title;
-  if (props.title) title = () => <h2 className="title">{props.title}</h2>;
-  if (props.subtitle)
-    subtitle = () => <h2 className="subtitle">{props.subtitle}</h2>;
-  return (
-    <section className="hero">
-      <div className="hero-body">
-        {title()}
-        {subtitle()}
-      </div>
-    </section>
-  );
-};
