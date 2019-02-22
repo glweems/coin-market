@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { CoinImg } from "./Api";
+import LoadingSpinner from "./Components/LoadingSpinner";
 import axios from "axios";
+import CoinChart from "./Components/CoinChart";
+import CoinHero from "./Components/CoinHero";
 
 export class CoinPage extends Component {
   state = null;
@@ -43,15 +45,21 @@ export class CoinPage extends Component {
       <React.Fragment>
         <section>
           {!this.state ? (
-            <em>Loading..</em>
+            <LoadingSpinner />
           ) : (
             <section className="container">
               <CoinHero
-                title={this.state.FullName}
-                subtitle={`Market Cap: ${this.state.usd.MKTCAP}`}
+                img={this.state.ImageUrl}
+                title={this.state.Name}
+                marketCap={this.state.usd.MKTCAP}
+                usd={this.state.usd}
+                btc={this.state.btc}
               />
-              <p>{this.COIN_ID}</p>
-              <img src={CoinImg(this.state.ImageUrl)} alt="" />
+              <CoinChart COIN_ID={this.props.match.params.id} />
+              <h1 className="title">{this.state.usd.PRICE}</h1>
+              <h1>{this.state.btc.PRICE}</h1>
+              <h1>{this.state.usd.SUPPLY}</h1>
+              <h1>{JSON.stringify(this.state)}</h1>
             </section>
           )}
         </section>
@@ -59,18 +67,3 @@ export class CoinPage extends Component {
     );
   }
 }
-
-const CoinHero = props => {
-  let subtitle, title;
-  if (props.title) title = () => <h2 className="title">{props.title}</h2>;
-  if (props.subtitle)
-    subtitle = () => <h2 className="subtitle">{props.subtitle}</h2>;
-  return (
-    <section className="hero">
-      <div className="hero-body">
-        {title()}
-        {subtitle()}
-      </div>
-    </section>
-  );
-};

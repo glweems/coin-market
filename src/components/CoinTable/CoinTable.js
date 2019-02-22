@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
 import { CoinImg } from "../../Api";
 import axios from "axios";
 
@@ -33,20 +34,31 @@ export class CoinTable extends Component {
       })();
     }
   }
+  filtered() {
+    console.log("filtered");
+  }
   render() {
     const TableRows = () =>
       this.state.coins.map((coin, index) => (
-        <TableRow key={coin.Name} coin={coin} rank={index} />
+        <TableRow key={coin.Name} coin={coin} rank={index + 1} />
       ));
 
     const Table = () => (
-      <table className="table is-striped" style={tableStyle}>
-        {TableHeader(TableHeaders)}
-        <tbody>{TableRows()}</tbody>
-      </table>
+      <React.Fragment>
+        <input
+          onChange={this.filtered}
+          type="text"
+          className="input"
+          placeholder="Search..."
+        />
+        <table className="table is-striped" style={tableStyle}>
+          {TableHeader(TableHeaders)}
+          <tbody>{TableRows()}</tbody>
+        </table>
+      </React.Fragment>
     );
     return (
-      <section>{!this.state.coins ? <em>Loading...</em> : Table()}</section>
+      <section>{!this.state.coins ? <LoadingSpinner /> : Table()}</section>
     );
   }
 }
@@ -54,15 +66,21 @@ export class CoinTable extends Component {
 const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 
 // * Table Header
-const TableHeader = headers => (
-  <thead>
-    <tr>
-      {headers.map(header => (
-        <th key={header}>{header}</th>
-      ))}
-    </tr>
-  </thead>
-);
+const TableHeader = headers => {
+  const marketCapStyle = header =>
+    header === "Market Cap" ? "marketcap-row" : "";
+  return (
+    <thead>
+      <tr>
+        {headers.map(header => (
+          <th className={marketCapStyle(header)} key={header}>
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+};
 
 // * Table Row
 const TableRow = props => {
@@ -79,8 +97,6 @@ const TableRow = props => {
   };
 
   const { coin, rank } = props;
-  // const { Name } = coin.CoinInfo;
-  // const { MKTCAP, PRICE, CHANGEPCTDAY, IMAGEURL } = coin.DISPLAY.USD;
 
   const NameRow = () => (
     <Link to={coin.Name}>
