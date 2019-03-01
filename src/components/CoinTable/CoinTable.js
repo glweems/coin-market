@@ -1,42 +1,29 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import LoadingSpinner from "../LoadingSpinner";
-import { CoinImg } from "../../Api";
-import axios from "axios";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import LoadingSpinner from '../LoadingSpinner';
+import { CoinImg, apiFetch, coinListUrl } from '../../Api';
 
 export class CoinTable extends Component {
   state = {};
-
-  async getCoins() {
-    const res = await axios(
-      "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD"
-    );
-    return await res.data.Data;
-  }
-
   componentDidMount() {
-    if (!this.state.data) {
-      (async () => {
-        try {
-          this.setState({
-            coins: [
-              ...(await this.getCoins()).map(coin => {
-                return {
-                  ...{ ...coin.CoinInfo },
-                  ...coin.DISPLAY.USD
-                };
-              })
-            ]
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-    }
+    apiFetch(coinListUrl, data => {
+      console.log(data.Data);
+      this.setState({
+        coins: [
+          ...data.Data.map(coin => ({
+            ...{ ...coin.CoinInfo },
+            ...coin.DISPLAY.USD,
+          })),
+        ],
+      });
+    });
   }
+
   filtered() {
-    console.log("filtered");
+    console.log('filtered');
   }
+
   render() {
     const TableRows = () =>
       this.state.coins.map((coin, index) => (
@@ -63,12 +50,12 @@ export class CoinTable extends Component {
   }
 }
 
-const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
+const TableHeaders = ['Rank', 'Name', 'Market Cap', 'Price', 'Change'];
 
 // * Table Header
 const TableHeader = headers => {
   const marketCapStyle = header =>
-    header === "Market Cap" ? "marketcap-row" : "";
+    header === 'Market Cap' ? 'marketcap-row' : '';
   return (
     <thead>
       <tr>
@@ -84,46 +71,52 @@ const TableHeader = headers => {
 
 // * Table Row
 const TableRow = props => {
-  const changeStyle = () => {
-    return {
-      color: props.coin.CHANGEPCTDAY >= 0 ? "green" : "red"
-    };
+  const changeStyle = () => ({
+    color: props.coin.CHANGEPCTDAY >= 0 ? 'green' : 'red',
+  });
+
+  // Prop Types
+  TableRow.propTypes = {
+    coin: PropTypes.object,
+    rank: PropTypes.string,
   };
 
   const imgStyle = {
-    width: "25px",
-    verticalAlign: "middle",
-    marginRight: "1rem"
+    width: '25px',
+    verticalAlign: 'middle',
+    marginRight: '1rem',
   };
 
-  const { coin, rank } = props;
-
   const NameRow = () => (
-    <Link to={coin.Name}>
-      <img style={imgStyle} src={CoinImg(coin.IMAGEURL)} alt={`${coin.Name}`} />
-      {coin.Name}
+    <Link to={props.coin.Name}>
+      <img
+        style={imgStyle}
+        src={CoinImg(props.coin.IMAGEURL)}
+        alt={`${props.coin.Name}`}
+      />
+      {props.coin.Name}
     </Link>
   );
 
   return (
     <tr>
-      <td>{rank}</td>
+      <td>{props.rank}</td>
       <td style={nameCell}>{NameRow()}</td>
-      <td>{coin.MKTCAP}</td>
-      <td>{coin.PRICE}</td>
-      <td style={changeStyle()}>{`${coin.CHANGEPCTDAY}%`}</td>
+      <td>{props.coin.MKTCAP}</td>
+      <td>{props.coin.PRICE}</td>
+      <td style={changeStyle()}>{`${props.coin.CHANGEPCTDAY}%`}</td>
     </tr>
   );
 };
 
 const nameCell = {
-  fontWeight: "500"
+  fontWeight: '500',
 };
 
 const tableStyle = {
-  width: "100%",
-  overflow: "scroll",
-  margin: "0 auto"
+  width: '100%',
+  overflow: 'scroll',
+  margin: '0 auto',
 };
 
 export default CoinTable;
