@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 export const Scroller = styled.div`
   width: 100%;
@@ -8,7 +8,8 @@ export const Scroller = styled.div`
 `;
 
 export const Hero = props => {
-  let subtitle, title;
+  let subtitle;
+  let title;
   if (props.title) title = () => <h2 className="title">{props.title}</h2>;
   if (props.subtitle)
     subtitle = () => <h2 className="subtitle">{props.subtitle}</h2>;

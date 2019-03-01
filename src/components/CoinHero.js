@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { CoinImgUrl } from "../Api";
+import React from 'react';
+import styled from 'styled-components';
+import { CoinImgUrl } from '../Api';
 
 const CoinHeroBody = styled.div`
   display: flex;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Hero = props => (
   <section className="hero is-link">

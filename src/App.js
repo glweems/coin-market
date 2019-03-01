@@ -1,17 +1,11 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import CoinTable from "./Components/CoinTable/CoinTable.js";
-import Hero from "./Components/Hero/Hero";
+import CoinTable from './Components/CoinTable/CoinTable.js';
+import Hero from './Components/Hero/Hero';
 
-import { CoinPage } from "./CoinPage";
-import { Scroller } from "./Components";
-
-const Navbar = () => (
-  <div>
-    <input type="text" className="input" placeholder="Search..." />
-  </div>
-);
+import { CoinPage } from './CoinPage';
+import { Scroller } from './Components';
 
 const HomePage = () => (
   <React.Fragment>
