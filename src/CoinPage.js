@@ -5,6 +5,10 @@ import LoadingSpinner from './Components/LoadingSpinner';
 import CoinChart from './Components/CoinChart';
 import CoinHero from './Components/CoinHero';
 
+const CoinLogo = styled.img`
+  width: 100px;
+`;
+
 export class CoinPage extends Component {
   state = null;
 
