@@ -2,11 +2,16 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier",
-    "prettier/react"
+    "plugin:prettier/recommended",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard"
   ],
   "parser": "babel-eslint",
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -30,7 +35,11 @@
   "rules": {
     "prettier/prettier": [
       "error",
-      { "trailingComma": true, "singleQuote": true }
+      {
+        "no-unused-vars": "off",
+        "trailingComma": "none",
+        "singleQuote": false
+      }
     ],
     "no-console": 0,
     "react/sort-comp": [
@@ -45,5 +54,10 @@
         ]
       }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
   }
 }
