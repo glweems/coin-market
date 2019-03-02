@@ -1,27 +1,39 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import LoadingSpinner from '../LoadingSpinner';
-import { CoinImg, apiFetch, coinListUrl } from '../../Api';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
+import { CoinImg, apiFetch, coinListUrl } from "../../Api";
 
 export class CoinTable extends Component {
-  state = {};
+  state = {
+    pagination: {
+      limit: 50,
+      start: 0
+    }
+  };
   componentDidMount() {
+    // apiFetch(coinListFullUrl, data => {
+    //   console.log("CoinMarketCap Fetch Successful");
+    //   this.setState({
+    //     ...data
+    //   });
+    // });
+
     apiFetch(coinListUrl, data => {
-      console.log(data.Data);
+      console.log("coinListUrl Fetch Successful");
       this.setState({
         coins: [
           ...data.Data.map(coin => ({
             ...{ ...coin.CoinInfo },
-            ...coin.DISPLAY.USD,
-          })),
-        ],
+            ...coin.DISPLAY.USD
+          }))
+        ]
       });
     });
   }
 
   filtered() {
-    console.log('filtered');
+    console.log("filtered");
   }
 
   render() {
@@ -38,6 +50,7 @@ export class CoinTable extends Component {
           className="input"
           placeholder="Search..."
         />
+
         <table className="table is-striped" style={tableStyle}>
           {TableHeader(TableHeaders)}
           <tbody>{TableRows()}</tbody>
@@ -50,12 +63,11 @@ export class CoinTable extends Component {
   }
 }
 
-const TableHeaders = ['Rank', 'Name', 'Market Cap', 'Price', 'Change'];
+const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 
-// * Table Header
 const TableHeader = headers => {
   const marketCapStyle = header =>
-    header === 'Market Cap' ? 'marketcap-row' : '';
+    header === "Market Cap" ? "marketcap-row" : "";
   return (
     <thead>
       <tr>
@@ -69,22 +81,21 @@ const TableHeader = headers => {
   );
 };
 
-// * Table Row
 const TableRow = props => {
   const changeStyle = () => ({
-    color: props.coin.CHANGEPCTDAY >= 0 ? 'green' : 'red',
+    color: props.coin.CHANGEPCTDAY >= 0 ? "green" : "red"
   });
 
   // Prop Types
   TableRow.propTypes = {
     coin: PropTypes.object,
-    rank: PropTypes.string,
+    rank: PropTypes.string
   };
 
   const imgStyle = {
-    width: '25px',
-    verticalAlign: 'middle',
-    marginRight: '1rem',
+    width: "25px",
+    verticalAlign: "middle",
+    marginRight: "1rem"
   };
 
   const NameRow = () => (
@@ -110,13 +121,13 @@ const TableRow = props => {
 };
 
 const nameCell = {
-  fontWeight: '500',
+  fontWeight: "500"
 };
 
 const tableStyle = {
-  width: '100%',
-  overflow: 'scroll',
-  margin: '0 auto',
+  width: "100%",
+  overflow: "scroll",
+  margin: "0 auto"
 };
 
 export default CoinTable;
