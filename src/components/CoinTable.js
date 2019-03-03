@@ -1,78 +1,145 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
-import { apiFetch, coinListFullUrl } from "../Api";
-// import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
-// import { CoinImg, apiFetch, coinListUrl, coinListFullUrl } from "../Api";
-// const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
+import { apiFetch, coinListFullUrl, CCcoinListUrl } from "../Api";
+
+// const Pagination = styled.div`
+//   float: right;
+//   padding: 0.5rem;
+//   button {
+//     margin-right: 0.5rem;
+//     &:last-child {
+//       margin-right: 0;
+//     }
+//   }
+// `;
+
+const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
+const pagination = {
+  limit: 100,
+  start: 0
+};
 export class CoinTable extends Component {
-  state = {
-    TableHeaders: ["Rank", "Name", "Market Cap", "Price", "Change"],
-    pagination: {
-      limit: 50,
-      start: 0
-    }
-  };
-
   componentDidMount = () => {
-    const { pagination } = this.state;
+    async function apiFetcher(callback) {
+      const CryptoCompare = await apiFetch(
+        CCcoinListUrl(pagination.limit, pagination.start),
+        data => data.Data
+      );
 
-    apiFetch(coinListFullUrl(pagination.limit, pagination.start), data => {
-      console.log("CoinMarketCap Fetch Successful");
-      this.setState({
-        coins: data
-      });
-    });
-  };
-
-  next = () => {
-    const { pagination } = this.state;
-
-    let start = pagination.start + pagination.limit;
-
-    apiFetch(coinListFullUrl(pagination.limit, start), data => {
-      console.log("CoinMarketCap Fetch Successful");
+      const CoinMarket = await apiFetch(
+        coinListFullUrl(pagination.limit, pagination.start),
+        data => {
+          return data;
+        }
+      );
+      const merged = () => {
+        function mapper(item) {
+          let matched = CryptoCompare.filter(
+            coin => coin.CoinInfo.Name === item.symbol
+          );
+          return {
+            ...item,
+            CCData: { ...matched[0] }
+          };
+        }
+        const data = CoinMarket.map(mapper);
+        return data;
+      };
+      return callback(merged());
+    }
+    apiFetcher(data =>
       this.setState({
         coins: data,
         pagination: {
-          start: start,
+          start: pagination.start,
           limit: pagination.limit
         }
-      });
-    });
+      })
+    );
+
+    // apiFetch(CCcoinListUrl(pagination.limit, pagination.start), data => {
+    //   // console.log(data.Data);
+    //   // console.log(data.Data.filter(coin => coin.CoinInfo.Name === "WAX"));
+    // });
+
+    // apiFetch(coinListFullUrl(pagination.limit, pagination.start), data => {
+    //   console.log("CoinMarketCap Fetch Successful");
+    //   this.setState({
+    //     coins: data
+    //   });
+    // });
   };
 
-  previous = () => {
-    const { pagination } = this.state;
-    const start = pagination.start - pagination.limit;
+  // next = () => {
+  //   const { pagination } = this.state;
 
-    apiFetch(coinListFullUrl(pagination.limit, start), data => {
-      console.log("CoinMarketCap Fetch Successful");
-      this.setState({
-        coins: data,
-        pagination: {
-          start: start,
-          limit: pagination.limit
-        }
-      });
-    });
-  };
+  //   let start = pagination.start + pagination.limit;
+
+  //   apiFetch(coinListFullUrl(pagination.limit, start), data => {
+  //     console.log("CoinMarketCap Fetch Successful");
+  //     this.setState({
+  //       coins: data,
+  //       pagination: {
+  //         start: start,
+  //         limit: pagination.limit
+  //       }
+  //     });
+  //   });
+  // };
+
+  // previous = () => {
+  //   const { pagination } = this.state;
+  //   const start = pagination.start - pagination.limit;
+
+  //   apiFetch(coinListFullUrl(pagination.limit, start), data => {
+  //     console.log("CoinMarketCap Fetch Successful");
+  //     this.setState({
+  //       coins: data,
+  //       pagination: {
+  //         start: start,
+  //         limit: pagination.limit
+  //       }
+  //     });
+  //   });
+  // };
 
   render() {
-    const { coins, pagination, TableHeaders } = this.state;
-    let prevButton;
-    if (pagination.start > 0) {
-      prevButton = <button onClick={this.previous}>Prev</button>;
-    }
+    // const { coins, pagination, TableHeaders } = this.state;
+
+    // const paginationClasses = "button is-outlined is-small";
+
+    // const prevButton = () => {
+    //   if (pagination.start !== 0) {
+    //     return (
+    //       <button
+    //         type="button"
+    //         onClick={this.previous}
+    //         className={paginationClasses}
+    //       >
+    //         {`<- Previous ${pagination.limit}`}
+    //       </button>
+    //     );
+    //   }
+    // };
 
     return (
       <section>
-        {!this.state.coins ? (
+        {!this.state ? (
           <LoadingSpinner />
         ) : (
           <React.Fragment>
-            {prevButton}
-            <button onClick={this.next}>Next</button>
+            {/* <Pagination>
+              {prevButton()}
+              <button
+                type="button"
+                className={paginationClasses}
+                onClick={this.next}
+              >
+                {`Next ${pagination.limit} ->`}
+              </button>
+            </Pagination> */}
             <table className="table is-fullwidth">
               <thead>
                 <tr>
@@ -82,11 +149,15 @@ export class CoinTable extends Component {
                 </tr>
               </thead>
               <tbody>
-                {coins.map((coin, index) => (
+                {this.state.coins.map((coin, index) => (
                   <tr key={index}>
                     <td>{coin.rank}</td>
+                    <td>
+                      <Link to={coin.symbol}>{coin.name}</Link>
+                    </td>
                     <td>{coin.name}</td>
-                    <td>{coin.market_cap_usd}</td>
+                    {/* <td>{setTimeout(coin.CCData.CoinInfo, 3000)}</td> */}
+                    {/* <td>{coin.CCData.CoinInfo.Id}</td> */}
                     <td>{coin.price_usd}</td>
                     <td>{coin.percent_change_24h}</td>
                   </tr>
