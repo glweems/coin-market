@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import CoinTable from "./Components/CoinTable";
 import Hero from "./Components/Hero/Hero";
-
 import { CoinPage } from "./CoinPage";
 import { Scroller } from "./Components";
 
+console.log(process.env.REACT_APP_DEV_API_KEY);
 const HomePage = () => (
   <React.Fragment>
     <section className="container is-fluid">
       <Hero title="Coin Markets" />
     </section>
+
     <section className="container">
       <Scroller>
         <CoinTable />
