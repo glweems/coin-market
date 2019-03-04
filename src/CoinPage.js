@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { apiFetch, coinFullInfoUrl, CoinGeneralInfoUrl } from "./Api";
@@ -45,6 +46,7 @@ export class CoinPage extends Component {
   render() {
     return (
       <React.Fragment>
+        <Link to="/">Home</Link>
         {!this.state ||
         !this.state.btc ||
         !this.state.usd ||
