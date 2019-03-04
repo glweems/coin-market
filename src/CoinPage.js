@@ -10,8 +10,13 @@ const CoinPageBody = styled.div`
   min-width: 100%;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  div {
-    background: pink;
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    div {
+      background: pink;
+    }
   }
 `;
 
