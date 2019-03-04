@@ -1,19 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
 import { setApi, CryptoCompareList } from "../Api";
-
-const Pagination = styled.div`
-  float: right;
-  padding: 0.5rem;
-  button {
-    margin-right: 0.5rem;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-`;
+import { Pagination } from "./Pagination";
 
 const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 const pagination = {
@@ -63,41 +52,18 @@ export class CoinTable extends Component {
   };
 
   render() {
-    const NextButton = () => (
-      <button
-        type="button"
-        onClick={this.next}
-        className="button is-outlined is-small"
-      >
-        {`Next ${pagination.limit} -->`}
-      </button>
-    );
-    const PrevButton = () => (
-      <button
-        type="button"
-        onClick={this.prev}
-        className="button is-outlined is-small"
-      >
-        {`<-- Previous ${pagination.limit}`}
-      </button>
-    );
-
     return (
       <section>
         {!this.state ? (
           <LoadingSpinner />
         ) : (
           <React.Fragment>
-            <Pagination>
-              {this.state.page === 0 ? (
-                <NextButton />
-              ) : (
-                <React.Fragment>
-                  <PrevButton />
-                  <NextButton />
-                </React.Fragment>
-              )}
-            </Pagination>
+            <Pagination
+              page={this.state.page}
+              next={this.next}
+              prev={this.prev}
+              limit={pagination.limit}
+            />
             <table className="table is-fullwidth">
               <thead>
                 <tr>
@@ -108,8 +74,8 @@ export class CoinTable extends Component {
               </thead>
               <tbody>
                 {this.state.coins.map((coin, index) => (
-                  <tr key={index}>
-                    <td>{index}</td>
+                  <tr key={index + 1}>
+                    <td>{index + 1}</td>
                     <td>
                       <Link to={coin.name}>{coin.name}</Link>
                     </td>
@@ -120,6 +86,12 @@ export class CoinTable extends Component {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              page={this.state.page}
+              next={this.next}
+              prev={this.prev}
+              limit={pagination.limit}
+            />
           </React.Fragment>
         )}
       </section>
