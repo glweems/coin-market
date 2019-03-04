@@ -2,10 +2,18 @@ export const CoinImgUrl = URL => `https://cryptocompare.com${URL}`;
 
 const baseUrl = `https://min-api.cryptocompare.com`;
 
+// const headers = {
+//   method: "GET",
+//   mode: "no-cors",
+//   headers: {
+//     api_key: "e0464167a575c6a4702b5f94a11e1fbeddfcb6c8d61955720feebb52d9a39595"
+//   }
+// };
+
 export const CoinGeneralInfoUrl = COIN_ID =>
   `${baseUrl}/data/coin/generalinfo?fsyms=${COIN_ID}&tsym=USD`;
 
-export const api = url => `${baseUrl}${url}`;
+export const api = url => [`${baseUrl}${url}`];
 
 export const coinListFullUrl = (limit, start) =>
   `https://api.coinmarketcap.com/v1/ticker/?limit=${limit}&start=${start}`;
