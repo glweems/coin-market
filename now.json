@@ -1,6 +1,9 @@
 {
   "version": 2,
-  "alias": ["coin-market.now.sh"],
+  "alias": [
+    "coin-market.now.sh"
+  ],
+  "public": true,
   "builds": [
     {
       "src": "package.json",
