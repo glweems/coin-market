@@ -1,14 +1,26 @@
-GET https://api.coinmarketcap.com/v1/ticker/?limit=0&start=50
 
-###
-GET https://min-api.cryptocompare.com/data/all/coinlist
 
-# NOMICS API
+
+
 @key = d0b04aca046f4e771454f8588e7b1fff
 @nomics = https://api.nomics.com/v1/
+@cc = https://min-api.cryptocompare.com
 @coin = BTC
 @start = 2018-04-14T00%3A00%3A00Z
 @end = 2018-05-14T00%3A00%3A00Z
+
+COINMARKETCAP
+GET https://api.coinmarketcap.com/v1/ticker/?limit=0&start=50
+
+###
+GET {{cc}}/data/all/coinlist
+CRYPTOCOMPARE
+###
+GET {{cc}}/data/pricemultifull?fsyms=BTC&tsyms=USD,EUR
+###
+GET {{cc}}/data/pricemultifull?fsyms=IOTA&tsyms=USD,BTC
+
+NOMICS API
 
 ###
 GET {{nomics}}prices
