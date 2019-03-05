@@ -84,3 +84,45 @@ export const setApi = async (api, callback) => callback(await getApi(api));
 //   `${baseUrl}/data/pricemultifull?fsyms=${COIN_ID}&tsyms=USD,BTC`;
 
 // export const CoinImg = URL => `https://cryptocompare.com/${URL}`;
+
+// const baseUrl = `https://min-api.cryptocompare.com`;
+
+// export const api = url => [`${baseUrl}${url}`];
+// export const CoinImgUrl = URL => `https://cryptocompare.com${URL}`;
+
+// // * Flatten the array
+// const flatten = array => {
+//   return array.Data.map(coin => {
+//     return { ...coin.CoinInfo, ...coin.DISPLAY.USD };
+//   });
+// };
+// // * Change object keys to lowercase
+// const objCase = array => {
+//   let clean = array.map(function(item) {
+//     for (var key in item) {
+//       item[key.toLowerCase()] = item[key];
+//       delete item[key];
+//     }
+//     return item;
+//   });
+//   return clean;
+// };
+
+// // ! Fetch Api data and return it
+// export const CryptoCompareList = (sort, limit, page, currency) =>
+//   api(`/data/top/${sort}?limit=${limit}&page=${page}&tsym=${currency}`);
+
+// export const CryptoCompareCoin = coin =>
+//   api(`/data/pricemultifull?fsyms=${coin}&tsyms=USD,BTC`);
+
+// export const getApi = async url =>
+//   await fetch(url)
+//     .then(res => res.json())
+//     .then(data => objCase(flatten(data)))
+//     .catch(err => console.log(err.message));
+
+// // # CoinApi
+// export const coinApi = async url => await fetch(url).then(res => res.json());
+
+// // * Run function with api data
+// export const setApi = async (api, callback) => callback(await getApi(api));

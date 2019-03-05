@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { CoinImgUrl } from '../Api';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { CoinImgUrl } from "../Api";
 
 const CoinHeroBody = styled.div`
   display: flex;
@@ -40,5 +41,12 @@ export const CoinHero = props => (
     </CoinHeroBody>
   </section>
 );
+
+CoinHero.propTypes = {
+  img: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  marketCap: PropTypes.string.isRequired,
+  usd: PropTypes.object.isRequired
+};
 
 export default CoinHero;
