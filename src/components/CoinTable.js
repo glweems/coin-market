@@ -1,14 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "gatsby";
+import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
-import { setApi, CryptoCompareList } from "../Api";
+import { setApi, CryptoCompareList, CoinImgUrl } from "../Api";
 import { Pagination } from "./Pagination";
+import { ColoredPercent, CoinTableImg } from "../components/SmallComponents";
 
 const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 const pagination = {
   limit: 50,
   start: 0
 };
+
+const StyledTabled = styled.table`
+  td {
+    overflow: scroll;
+  }
+`;
+
 export class CoinTable extends Component {
   componentDidMount = () => {
     setApi(CryptoCompareList("mktcapfull", pagination.limit, 0, "USD"), data =>
@@ -64,7 +73,7 @@ export class CoinTable extends Component {
               prev={this.prev}
               limit={pagination.limit}
             />
-            <table className="table is-fullwidth">
+            <StyledTabled className="table is-fullwidth">
               <thead>
                 <tr>
                   {TableHeaders.map(header => (
@@ -77,15 +86,18 @@ export class CoinTable extends Component {
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>
-                      <Link to={coin.name}>{coin.name}</Link>
+                      <CoinTableImg img={CoinImgUrl(coin.imageurl)} />
+                      <Link to={`/coin/#${coin.name}`}>{coin.name}</Link>
                     </td>
                     <td>{coin.mktcap}</td>
                     <td>{coin.price}</td>
-                    <td>{coin.changepct24hour}</td>
+                    <td>
+                      <ColoredPercent percent={Number(coin.changepct24hour)} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </StyledTabled>
             <Pagination
               page={this.state.page}
               next={this.next}
