@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Gatsby
 
-## Available Scripts
+In this example we will be deploying a simple "Hello World" example with Gatsby.
 
-In the project directory, you can run:
+### Getting started with Gatsby
 
-### `npm start`
+Start a new Gatsby project using:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npx gatsby new <project name>
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### Deploy with Now
 
-### `npm test`
+First we need to create a `now.json` configuration file to instruct Now how to build the project.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For this example we will be using our newest version [Now 2.0](https://zeit.co/now).
 
-### `npm run build`
+By adding the `version` key to the `now.json` file, we can specify which Now Platform version to use.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+We also need to define each builders we would like to use. [Builders](https://zeit.co/docs/v2/deployments/builders/overview/) are modules that take a deployment's source and return an output, consisting of [either static files or dynamic Lambdas](https://zeit.co/docs/v2/deployments/builds/#sources-and-outputs).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+In this case we are going to use `@now/static-build` to build and deploy our Gatsby application selecting the `package.json` as our entry point. We will also define a name for our project (optional).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```json
+{
+    "version": 2,
+    "name": "gatsby",
+    "builds": [
+        { "src": "package.json", "use": "@now/static-build", "config": {"distDir": "public"} }
+    ]
+}
+```
 
-### `npm run eject`
+Visit our [documentation](https://zeit.co/docs/v2/deployments/configuration) for more information on the `now.json` configuration file.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+We also need to include a script in `package.json` named `"now-build"` that specifies what command Now will run on the server to "build" your application. Also, notice that this builder accepts a configuration called `"distDir"`, which should point to the output directory of our build script, which for Gatsby it is called `public`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```json
+{
+    "scripts": {
+        ...
+        "now-build": "npm run build"
+    }
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+We are now ready to deploy the app.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+now
+```
