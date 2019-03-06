@@ -4,7 +4,7 @@ import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
 import { setApi, CryptoCompareList, CoinImgUrl } from "../Api";
 import { Pagination } from "./Pagination";
-import { ColoredPercent, CoinTableImg } from "../components/SmallComponents";
+import { ColoredPercent, TableImg } from "../components/SmallComponents";
 
 const TableHeaders = ["Rank", "Name", "Market Cap", "Price", "Change"];
 const pagination = {
@@ -26,6 +26,11 @@ export class CoinTable extends Component {
         page: 0
       })
     );
+    setApi(CryptoCompareList("mktcapfull", pagination.limit, 1, "USD"), data =>
+      this.setState({
+        next: data
+      })
+    );
   };
 
   next = () => {
@@ -38,7 +43,9 @@ export class CoinTable extends Component {
       ),
       data =>
         this.setState({
-          coins: data,
+          coins: this.state.next,
+          next: data,
+          prev: this.state.coins,
           page: this.state.page + 1
         })
     );
@@ -54,7 +61,8 @@ export class CoinTable extends Component {
       ),
       data =>
         this.setState({
-          coins: data,
+          coins: this.state.prev,
+          next: this.state.coin,
           page: this.state.page - 1
         })
     );
@@ -86,7 +94,7 @@ export class CoinTable extends Component {
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>
-                      <CoinTableImg img={CoinImgUrl(coin.imageurl)} />
+                      <TableImg img={CoinImgUrl(coin.imageurl)} />
                       <Link to={`/coin/#${coin.name}`}>{coin.name}</Link>
                     </td>
                     <td>{coin.mktcap}</td>

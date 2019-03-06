@@ -1,20 +1,37 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-const TableImg = styled.img`
+
+// ! HEADER
+export const Header = props => {
+  return (
+    <section className="hero">
+      <div className="hero-body">
+        <h1 className="title">{props.title}</h1>
+      </div>
+    </section>
+  );
+};
+// ? Header Prop Types
+Header.propTypes = {
+  title: PropTypes.string.isRequired
+};
+
+// ! Coin Table Img
+const CoinTableImg = styled.img`
   width: 20px;
 `;
 
-export class CoinTableImg extends Component {
+export class TableImg extends Component {
   static propTypes = {
     img: PropTypes.string.isRequired
   };
   render() {
-    return <TableImg src={this.props.img} />;
+    return <CoinTableImg src={this.props.img} />;
   }
 }
 
-// ? Scroller
+// ! Colored Percent
 export class ColoredPercent extends Component {
   static propTypes = {
     percent: PropTypes.number.isRequired
@@ -30,11 +47,11 @@ export class ColoredPercent extends Component {
     return <span style={this.styleObj}>{`${percent} %`}</span>;
   }
 }
-
+// ! Scroller
 export const Scroller = styled.div`
   width: 100%;
   max-width: 100%;
   overflow: scroll;
 `;
 
-export default { Scroller, ColoredPercent };
+export default { Scroller, ColoredPercent, TableImg, Header };

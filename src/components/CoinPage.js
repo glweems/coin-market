@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { apiFetch, coinFullInfoUrl, CoinGeneralInfoUrl } from "./Api";
 import LoadingSpinner from "./Components/LoadingSpinner";
-// import CoinChart from "./Components/CoinChart";
 import CoinHero from "./Components/CoinHero";
 
 const CoinPageBody = styled.div`

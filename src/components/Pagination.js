@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const ButtonsWrapper = styled.div`
-  float: right;
-  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+  border: 1px solid black;
   button {
     margin-right: 0.5rem;
     &:last-child {

@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { apiFetch, coinFullInfoUrl, CoinGeneralInfoUrl } from "../Api";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -81,11 +79,3 @@ export default class coin extends Component {
     );
   }
 }
-
-// coin.propTypes = {
-//   match: PropTypes.shape({
-//     params: PropTypes.shape({
-//       id: PropTypes.string
-//     }).isRequired
-//   }).isRequired
-// };
